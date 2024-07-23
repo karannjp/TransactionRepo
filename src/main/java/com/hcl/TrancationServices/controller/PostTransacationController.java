@@ -16,13 +16,23 @@ public class PostTransacationController {
     private TrascationServices trascationServices;
 
     @PostMapping("/transfer")
-public ResponseEntity<String> tramsfer(@RequestParam String debitAccountNo, @RequestParam String creditAccountNo, @RequestParam Double amount){
+public ResponseEntity<String> tramsfer(@RequestParam int debitAccountNo, @RequestParam int creditAccountNo, @RequestParam Double amount){
     try {
         trascationServices.initiateTrascation(debitAccountNo,creditAccountNo,amount);
         return ResponseEntity.ok("Transcation Successful");
     }catch (Exception exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
-
 }
+
+    @PostMapping("/save_data")
+    public ResponseEntity<String> saveData(@RequestParam int userid ,@RequestParam int debitAccountNo,@RequestParam  int creditAccountNo,@RequestParam Double amount){
+try {
+        trascationServices.prechecDetails(userid,debitAccountNo,creditAccountNo,amount);
+        return ResponseEntity.ok("save the data ");
+    }catch (Exception exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+}
+
 }
